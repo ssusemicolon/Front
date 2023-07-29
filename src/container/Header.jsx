@@ -218,7 +218,9 @@ const Header = () => {
                   <Subbutton>검색 기록 삭제</Subbutton>
                 </SubMenu>
               )}
-              <MenuInputButton>버전 정보 v0.0.0</MenuInputButton>
+              <MenuInputButton onClick={() => navigate("/splash")}>
+                버전 정보 v1.0.0
+              </MenuInputButton>
             </MenuButton>
           </Menu>
         )}
