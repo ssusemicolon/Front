@@ -13,8 +13,8 @@ const StyledIcon = styled.div`
 
 const slideInAnimation = keyframes`
   from {
-    transform: translateX(-100%);∏
-  }
+    transform: translateX(-100%)
+  };
   to {
     transform: translateX(0);
   }
@@ -173,7 +173,7 @@ const Header = () => {
             <Icon.Menu />
           </HeaderHamburger>
           <HeaderTitle>
-            <LogoImg src={Logo} alt="logo " />
+            <a href="/"><LogoImg src={Logo} alt="logo "/></a>
           </HeaderTitle>
         </StyledIcon>
         <HeaderCenter>{isSearchOpen && <SearchContainer />}</HeaderCenter>

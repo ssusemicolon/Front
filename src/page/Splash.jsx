@@ -83,13 +83,17 @@ export const SplashPage = () => {
         navigate(`/`);
     }
 
+    const clickBtnRegister = () => {
+        navigate(`/admin/register`);
+    }
+
     return <Container>
         <Header/>
         <SplashBox>
         <TextBox>
             <MidiumText>자리있슈</MidiumText>
             <TitleText>CCTV 이용 식당, 카페 밀집도 계산 및 시각화</TitleText>
-            <MiniText><a href="">가게 사장님이라면? 이곳에서 장소 등록하기↗</a></MiniText>
+            <MiniText onClick={clickBtnRegister}>가게 사장님이라면? 이곳에서 장소 등록하기↗</MiniText>
         </TextBox>
         <ImageBox>
             <backgroundImg/>
