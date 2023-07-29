@@ -44,7 +44,6 @@ export const DateChart = ({ storeId, date, handleDateChange }) => {
 
   return (
     <VStack>
-      <Hr />
       <MyCalendar onChange={handleDateChange} date={date} />
       <Spacing spacing={theme.spacing.lg} />
       <ResponsiveContainer width="100%" height="100%">

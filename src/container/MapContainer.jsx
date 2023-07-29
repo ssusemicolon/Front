@@ -22,8 +22,6 @@ const MapContainer = (props) => {
   const mapRef = useRef(null);
   const navigate = useNavigate();
 
-  console.log("search keyword: ", searchKeyword);
-
   /**
    * 가게들의 평균위치 반환
    */
@@ -64,11 +62,17 @@ const MapContainer = (props) => {
           position.coords.latitude,
           position.coords.longitude,
         );
+
         mapRef.current.setCenter(moveLatLon);
+        dispatch(
+          mapActions.setCenter({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          }),
+        );
       });
-      refreshLocation();
     }
-  }, [refreshLocation]);
+  }, [mapRef, dispatch]);
 
   /**
    * 마커 표시
@@ -167,12 +171,12 @@ const MapContainer = (props) => {
 
   // 줌인
   const zoomIn = () => {
-    if (level > 1) dispatch(mapActions.setLevel(level - 1));
+    mapRef.current.setLevel(mapRef.current.getLevel() - 1);
   };
 
   // 줌아웃
   const zoomOut = () => {
-    if (level < 6) dispatch(mapActions.setLevel(level + 1));
+    mapRef.current.setLevel(mapRef.current.getLevel() + 1);
   };
 
   return (

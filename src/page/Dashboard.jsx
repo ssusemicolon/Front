@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import Icon from "../component/Icon";
 import Header from "../container/Header";
 import MapContainer from "../container/MapContainer";
@@ -82,6 +82,8 @@ const PopDenText = styled.h4`
   width: 100%;
   padding: 2px 0 0 0;
   font-size: 14px;
+  color: ${(props) => props.color || "black"};
+  font-weight: bold;
 `;
 
 const StyledImage = styled.div`
@@ -104,6 +106,7 @@ export const DashboardPage = () => {
   const { center, radius } = useAppSelector((state) => state.map);
   const { latitude, longitude } = center;
   const isSearched = useRef(false);
+  const theme = useTheme();
 
   const { isLoading, data: nearStores } = useNearStores({
     radius,
@@ -152,6 +155,13 @@ export const DashboardPage = () => {
     else return "원활";
   };
 
+  const calculatePopColor = (density) => {
+    if (density >= 75) return theme.colors.mainRed;
+    else if (density < 75 && density >= 50) return theme.colors.mainRed;
+    else if (density < 50 && density >= 25) return theme.colors.mainYellow;
+    else return theme.colors.mainGreen;
+  };
+
   const StoresComponent = () => {
     const ret = stores.map(({ storeId, storeName, thumUrl, density }) => {
       return (
@@ -166,7 +176,11 @@ export const DashboardPage = () => {
               <PopDen>
                 <Icon.Pop />
               </PopDen>
-              <PopDenText>{calculatePop(density)}</PopDenText>
+              <PopDenText>
+                <PopDenText color={calculatePopColor(density)}>
+                  {calculatePop(density)}
+                </PopDenText>
+              </PopDenText>
               <PopDen>
                 <Icon.Density />
               </PopDen>

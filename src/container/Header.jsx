@@ -4,6 +4,7 @@ import Logo from "../asset/png/logo.png";
 import Icon from "../component/Icon";
 import { LogoImg } from "../component/Logo";
 import { SearchContainer } from "./SearchContainer";
+import { useNavigate } from "react-router-dom";
 
 const StyledIcon = styled.div`
   svg {
@@ -28,7 +29,7 @@ const HeaderContainer = styled.header`
   height: 80px;
   background-color: #ffffff;
   box-shadow: 0 0 3px #000;
-  z-index: 20;
+  z-index: 50;
 `;
 
 const HeaderWrapper = styled.div`
@@ -94,6 +95,7 @@ const Menu = styled.div`
   animation: ${(props) => (props.isOpen ? slideInAnimation : "none")} 0.3s
     ease-in-out;
   transition: left 0.3s ease-in-out;
+  z-index: 100;
 `;
 
 const MenuButtonContainer = styled.div`
@@ -103,24 +105,21 @@ const MenuButtonContainer = styled.div`
 `;
 
 const MenuButtonWrapper = styled.div`
-  margin-bottom: 30px;
-
   &:last-child {
     margin-bottom: 0;
   }
 `;
 const slideInAnimation2 = keyframes`
   from {
-    transform: translateY(-60%);
+    transform: translateY(-40%);
   }
   to {
     transform: translateY(0);
   }
 `;
 const SubMenu = styled.div`
-  padding: 10px;
+  // padding: 10px;
   background-color: #ffffff;
-  margin-top: 10px;
   animation: ${slideInAnimation2} 0.3s ease-in-out;
 `;
 const Subbutton = styled.button`
@@ -149,6 +148,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -161,7 +161,7 @@ const Header = () => {
     setIsSubMenuOpen(!isSubMenuOpen);
   };
   const handleSettingsClick = (e) => {
-    e.stopPropagation(); // 이벤트 버블링 방지
+    e.preventDefault();
     toggleSubMenu();
   };
 
@@ -173,7 +173,9 @@ const Header = () => {
             <Icon.Menu />
           </HeaderHamburger>
           <HeaderTitle>
-            <a href="/"><LogoImg src={Logo} alt="logo "/></a>
+            <a href="/">
+              <LogoImg src={Logo} alt="logo " />
+            </a>
           </HeaderTitle>
         </StyledIcon>
         <HeaderCenter>{isSearchOpen && <SearchContainer />}</HeaderCenter>
@@ -183,10 +185,10 @@ const Header = () => {
             <HeaderInputButton onClick={toggleSearch}>
               <Icon.Search />
             </HeaderInputButton>
-            <HeaderInputButton onClick>
+            <HeaderInputButton>
               <Icon.Dark />
             </HeaderInputButton>
-            <HeaderInputButton onClick>
+            <HeaderInputButton>
               <Icon.Option />
             </HeaderInputButton>
           </StyledIcon>
@@ -197,7 +199,9 @@ const Header = () => {
           <Menu isOpen={isMenuOpen} onClick={toggleMenu}>
             <MenuButton>
               <MenuInputButton>공지 사항</MenuInputButton>
-              <MenuInputButton>신규 장소 등록</MenuInputButton>
+              <MenuInputButton onClick={() => navigate("/admin/register")}>
+                신규 장소 등록
+              </MenuInputButton>
               <MenuInputButton>고객 센터</MenuInputButton>
 
               <MenuInputButton onClick={handleSettingsClick}>
@@ -205,8 +209,12 @@ const Header = () => {
               </MenuInputButton>
               {isSubMenuOpen && (
                 <SubMenu>
-                  <Subbutton>장소 수정</Subbutton>
-                  <Subbutton>매장 삭제 신청</Subbutton>
+                  <Subbutton onClick={() => navigate("/admin/modify")}>
+                    장소 수정
+                  </Subbutton>
+                  <Subbutton onClick={() => navigate("/admin/delete")}>
+                    매장 삭제 신청
+                  </Subbutton>
                   <Subbutton>검색 기록 삭제</Subbutton>
                 </SubMenu>
               )}

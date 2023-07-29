@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Icon from "../component/Icon";
+import { Hr } from "../styles/Style";
 import { WeeklyChart } from "./Chart";
 import { DateChart } from "./Rechart";
+import { HStack } from "./Admin/Layout";
 
 const SwitchWrapper = styled.div`
   width: 800px;

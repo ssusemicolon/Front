@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import Icon from "../component/Icon";
@@ -17,12 +17,12 @@ const StyledIcon = styled.div`
 const HeaderForm = styled.form`
   display: flex;
   max-width: 100%;
-    width: 100%;
+  width: 100%;
   height: 40px;
   padding: 0 6px;
   border: 1px solid #8f8f8f;
-  border-radius:10px;
-  margin-Left: 0%;
+  border-radius: 10px;
+  margin-left: 0%;
 `;
 
 const HeaderInputText = styled.input`
@@ -34,7 +34,6 @@ const HeaderInputText = styled.input`
   // border: 1px solid #8f8f8f;
   // border-radius:10px;
   // margin-Left: 0%;
-  
 `;
 
 const HeaderInputButton = styled.button`
@@ -44,33 +43,43 @@ const HeaderInputButton = styled.button`
 `;
 
 export const SearchContainer = () => {
-    const dispatch = useAppDispatch();
-    const {searchKeyword} = useAppSelector((store) => store.search);
-    const navigate = useNavigate()
+  const dispatch = useAppDispatch();
+  const { searchKeyword } = useAppSelector((store) => store.search);
+  const navigate = useNavigate();
+  const searchInputRef = useRef(null);
 
-    const [query, setQuery] = useState(searchKeyword || '')
+  const [query, setQuery] = useState(searchKeyword || "");
 
-    const handleChange =(e) => {
-        setQuery(e.currentTarget.value);
+  useEffect(() => {
+    if (searchInputRef?.current) {
+      searchInputRef.current.focus();
     }
-    
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        dispatch(searchActions.setQuery(query));
-        navigate("/")
-    }
+  }, [searchInputRef]);
 
-    return  <HeaderForm onSubmit={handleSubmit}>
-    <StyledIcon>
-      <HeaderInputButton >
-        <Icon.Search />
-    </HeaderInputButton>
-    </StyledIcon>
-    <HeaderInputText
-      placeholder="Search..."
-      value={query}
-      onChange={handleChange}
-    />
-  </HeaderForm>
-}
+  const handleChange = (e) => {
+    setQuery(e.currentTarget.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(searchActions.setQuery(query));
+    navigate("/");
+  };
+
+  return (
+    <HeaderForm onSubmit={handleSubmit}>
+      <StyledIcon>
+        <HeaderInputButton>
+          <Icon.Search />
+        </HeaderInputButton>
+      </StyledIcon>
+      <HeaderInputText
+        placeholder="Search..."
+        value={query}
+        onChange={handleChange}
+        ref={searchInputRef}
+      />
+    </HeaderForm>
+  );
+};

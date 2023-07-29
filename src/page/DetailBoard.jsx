@@ -13,8 +13,15 @@ import DensityInfoContainer from "../container/density";
 import { useDetailBoard } from "../utils/hooks/useDetailboard";
 import { useAppDispatch } from "../store/Hooks";
 import { mapActions } from "../store/ducks/mapSlice";
+import { Hr } from "../styles/Style";
+import { Spacing } from "../component/Spacing";
 
 const Container = styled.div``;
+
+const HrWrapper = styled.div`
+  margin: auto;
+  width: 50%;
+`;
 
 export const DetailPage = () => {
   const { storeId } = useParams();
@@ -60,7 +67,13 @@ export const DetailPage = () => {
 
       <Market data={storeDetail} />
       <DensityInfoContainer storeInfo={storeDetail} />
+
+      <HrWrapper>
+        <Hr />
+      </HrWrapper>
+
       <ChartToggle storeId={storeId} />
+      <Spacing spacing={"5vh"} />
     </Container>
   );
 };
