@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { styled } from "styled-components";
-import { MyCalendar } from "../container/Calendar";
+import { Spacing } from "../component/Spacing";
 import Header from "../container/Header";
 import MapContainer from "../container/MapContainer";
 import Market from "../container/Market";
@@ -10,11 +10,10 @@ import StoreThumbContainer, {
 } from "../container/Picture";
 import ChartToggle from "../container/ToggleChart";
 import DensityInfoContainer from "../container/density";
-import { useDetailBoard } from "../utils/hooks/useDetailboard";
 import { useAppDispatch } from "../store/Hooks";
 import { mapActions } from "../store/ducks/mapSlice";
 import { Hr } from "../styles/Style";
-import { Spacing } from "../component/Spacing";
+import { useDetailBoard } from "../utils/hooks/useDetailboard";
 
 const Container = styled.div``;
 
