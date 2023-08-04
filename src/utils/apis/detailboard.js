@@ -4,7 +4,7 @@ export const fetchDetailBoardApi = async (storeId) => { //storeID를 매개변�
   if (!storeId) {
     return undefined;
   }
-  const { data } = await customAxios.get(`/store/storeInfo/${storeId}`);
+  const { data } = await customAxios.get(`/stores/${storeId}`);
   return data.data;
 };
 
